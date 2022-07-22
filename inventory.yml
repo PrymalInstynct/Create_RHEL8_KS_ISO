@@ -11,7 +11,7 @@ infrastructure:
         provision:
           hosts:
             provision01:
-              ansible_host: 192.168.21.119
+              ansible_host: 192.168.21.118
               ansible_user: cyber
               ansible_python_interpreter: /usr/bin/python3
               user_groups: wheel
@@ -34,7 +34,7 @@ infrastructure:
         workstations:
           hosts:
             adm01:
-              ansible_host: 192.168.21.119
+              ansible_host: 192.168.21.121
               ansible_user: cyber
               ansible_python_interpreter: /usr/bin/python3
               user_groups: wheel
@@ -55,7 +55,7 @@ infrastructure:
               var_tmp_percent: 5
               swap_percent: 5
             adm02:
-              ansible_host: 192.168.21.119
+              ansible_host: 192.168.21.122
               ansible_user: cyber
               ansible_python_interpreter: /usr/bin/python3
               user_groups: wheel
@@ -76,7 +76,7 @@ infrastructure:
               var_tmp_percent: 5
               swap_percent: 5
             wks01:
-              ansible_host: 192.168.21.119
+              ansible_host: 192.168.21.123
               ansible_user: cyber
               ansible_python_interpreter: /usr/bin/python3
               user_groups: wheel
@@ -97,7 +97,7 @@ infrastructure:
               var_tmp_percent: 5
               swap_percent: 5
             wks02:
-              ansible_host: 192.168.21.119
+              ansible_host: 192.168.21.124
               ansible_user: cyber
               ansible_python_interpreter: /usr/bin/python3
               user_groups: wheel

@@ -12,7 +12,7 @@ keyboard --vckeymap=us --xlayouts='us'
 timezone UTC --isUtc --ntpservers=192.168.20.69
 
 # Network information
-network --device=ens192 --onboot=yes --noipv6 --bootproto=static --ip=192.168.21.119 --netmask=255.255.255.0 --gateway=192.168.21.1 --nameserver=192.168.20.69
+network --device=ens192 --onboot=yes --noipv6 --bootproto=static --ip=192.168.21.124 --netmask=255.255.255.0 --gateway=192.168.21.1 --nameserver=192.168.20.69
 network --hostname=wks02.gpssus.com
 
 # Use CDROM installation media

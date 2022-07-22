@@ -6,7 +6,7 @@
     state: directory
 
 - name: "ISOs | Create provision01 Kickstart ISO"
-  shell: "mkksiso --ks kickstarts/provision01.ks rhel-8.6-x86_64-dvd.iso ISOs/provison01-ks.iso"
+  shell: ./mkksiso --ks kickstarts/provision01.ks rhel-8.6-x86_64-dvd.iso ISOs/provision01-ks.iso
   args:
     chdir: "{{ role_path }}/files"
 
