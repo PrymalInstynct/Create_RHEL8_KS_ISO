@@ -1,2 +1,20 @@
 ---
-# tasks file for Create_RHEL8_KS_ISO
+- name: Include Vaulted Variables
+  include_vars: vault.yml
+  tags:
+    - always
+
+- name: Create Kickstart Files
+  import_tasks: generate_ks.yml
+  delegate_to: localhost
+  tags:
+    - never
+    - make_iso
+    - ks
+
+- name: Create ISO Files
+  import_tasks: generate_iso.yml
+  tags:
+    - never
+    - make_iso
+    - iso

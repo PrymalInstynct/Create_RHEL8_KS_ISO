@@ -1,0 +1,141 @@
+#version={{ hostvars[groups['workstations'][0]].boot_os }}
+# Use Graphical Install
+graphical
+
+# System language
+lang en_US.UTF-8
+
+# Keyboard layouts
+keyboard --vckeymap=us --xlayouts='us'
+
+# System timezone
+timezone UTC --isUtc --ntpservers={{ ntp_server }}
+
+# Network information
+network --device={{ hostvars[groups['workstations'][0]].kickstart_nic }} --onboot=yes --noipv6 --bootproto=static --ip={{ hostvars[groups['workstations'][0]].ansible_host }} --netmask={{ hostvars[groups['workstations'][0]].netmask }} --gateway={{ hostvars[groups['workstations'][0]].gateway }} --nameserver={{ hostvars[groups['workstations'][0]].dns }}
+network --hostname={{ hostvars[groups['workstations'][0]].inventory_hostname }}.{{ domain }}
+
+# Use CDROM installation media
+cdrom
+
+# Repositories
+repo --name="ks-AppStream" --baseurl=file:///run/install/repo/AppStream
+
+# Packages to Install
+%packages
+
+# Groups to Install
+@^gnome-desktop-environment
+@base
+@core
+@desktop-debugging
+@dial-up
+@directory-client
+@fonts
+@gnome-desktop
+@guest-agents
+@guest-desktop-agents
+@input-methods
+@internet-browser
+@java-platform
+@multimedia
+@network-file-system-client
+@networkmanager-submodules
+@print-client
+@x11
+
+# Extra packages
+ipa-client
+
+# RHEL7 Stig Required Present
+openssh
+policycoreutils
+rsyslog
+grub2-tools
+grub2-tools-extra
+grub2-tools-minimal
+rng-tools
+usbguard
+libselinux-python
+tmux
+audit
+gnutls
+firewalld
+nftables
+fipscheck
+chrony
+
+# RHEL7 Stig Required Absent
+-gssproxy
+-sendmail
+-iprutils
+-tuned
+-telnet-server
+-rsh-server
+-krb5-workstation
+-vsftpd
+-tftp-server
+-postfix
+-ntp
+
+%end
+
+# Root password
+rootpw --iscrypted $6$oSvQY9tPaCZy533d$oBsZZO9SRiUX200S6rBltTSgDzDpdn8IdO/pFzFmtOXfqqfAHL453MS0fxK9RhRK0XrD8ihKudhnez4/Rk5Pu0 
+
+# Default User Account
+user --name={{ hostvars[groups['workstations'][0]].ansible_user }} --groups={{ hostvars[groups['workstations'][0]].user_groups }} --iscrypted --password=$6$oSvQY9tPaCZy533d$oBsZZO9SRiUX200S6rBltTSgDzDpdn8IdO/pFzFmtOXfqqfAHL453MS0fxK9RhRK0XrD8ihKudhnez4/Rk5Pu0
+
+# X Window System Configuration Information
+xconfig --startxonboot
+
+# Disk to Use
+ignoredisk --only-use={{ hostvars[groups['workstations'][0]].boot_drive }}
+
+# Clean Partitions
+clearpart --all --initlabel
+
+# Boot Loader Confirguration Information
+bootloader --location=mbr --boot-drive={{ hostvars[groups['workstations'][0]].boot_drive }}
+
+# Disk Partitioning Information
+part /boot --size=1024 --fstype="xfs" --ondrive={{ hostvars[groups['workstations'][0]].boot_drive }}
+part /boot/efi --size=200 --fstype="efi" --ondrive={{ hostvars[groups['workstations'][0]].boot_drive }} --fsoptions="umask=0077,shortname=winnt"
+part pv.200 --size=100 --grow --fstype="lvmpv" --ondrive={{ hostvars[groups['workstations'][0]].boot_drive }}
+
+# Logical Volume Partitioning Information
+volgroup {{ hostvars[groups['workstations'][0]].boot_os }} --pesize=4096 pv.200
+logvol / --fstype="xfs" --name=root --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].root_percent }}
+logvol /home --fstype="xfs" --name=home --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].home_percent }}
+logvol /tmp --fstype="xfs" --name=tmp --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].tmp_percent }}
+logvol /var --fstype="xfs" --name=var --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].var_percent }}
+logvol /var/log --fstype="xfs" --name=var_log --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].log_percent }}
+logvol /var/log/audit --fstype="xfs" --name=var_log_audit --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].audit_percent }}
+logvol /var/tmp --fstype="xfs" --name=var_tmp --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].var_tmp_percent }}
+logvol swap --fstype="swap" --name=swap --vgname={{ hostvars[groups['workstations'][0]].boot_os }} --percent={{ hostvars[groups['workstations'][0]].swap_percent }}
+
+# System services
+services --enabled="chronyd"
+
+# System authorization information
+auth --passalgo=sha512 --useshadow
+
+# Disable First Boot GUI Application
+firstboot --disable
+
+# Accept Eula
+eula --agreed
+
+# Disable Kernel Dumps
+%addon com_redhat_kdump --disable --reserve-mb='auto'
+%end
+
+# Password Policy
+%anaconda
+pwpolicy root --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+pwpolicy user --minlen=6 --minquality=1 --notstrict --nochanges --emptyok
+pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+%end
+
+# Reboot after Install
+reboot

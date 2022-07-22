@@ -1,0 +1,20 @@
+---
+- name: "Kickstarts | Create the Kickstart Directory Structure"
+  file:
+    path: "{{ role_path }}/files/kickstarts"
+    mode: 0755
+    state: directory
+
+- name: "Kickstarts | Create Red Hat Kickstart Files"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: "kickstarts/redhat/adm01.ks.j2", dest: "{{ role_path }}/files/kickstarts/adm01.ks" }
+    - { src: "kickstarts/redhat/adm02.ks.j2", dest: "{{ role_path }}/files/kickstarts/adm02.ks" }
+    - { src: "kickstarts/redhat/wks01.ks.j2", dest: "{{ role_path }}/files/kickstarts/wks01.ks" }
+    - { src: "kickstarts/redhat/wks02.ks.j2", dest: "{{ role_path }}/files/kickstarts/wks02.ks" }
+    - { src: "kickstarts/redhat/provision01.ks.j2", dest: "{{ role_path }}/files/kickstarts/provision01.ks" }

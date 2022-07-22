@@ -1,0 +1,119 @@
+---
+infrastructure:
+  children:
+    local:
+      hosts:
+        localhost:
+          ansible_host: 127.0.0.1
+          ansible_python_interpreter: /usr/bin/python3
+    redhat:
+      children:
+        provision:
+          hosts:
+            provision01:
+              ansible_host: 192.168.21.119
+              ansible_user: cyber
+              ansible_python_interpreter: /usr/bin/python3
+              user_groups: wheel
+              kickstart_nic: ens192
+              gateway: 192.168.21.1
+              netmask: 255.255.255.0
+              dns: 192.168.20.69
+              ntp_server: 192.168.20.69
+              domain: gpssus.com
+              boot_os: rhel8
+              boot_drive: sda
+              root_percent: 10
+              home_percent: 4
+              tmp_percent: 2
+              var_percent: 78
+              log_percent: 1
+              audit_percent: 1
+              var_tmp_percent: 2
+              swap_percent: 2
+        workstations:
+          hosts:
+            adm01:
+              ansible_host: 192.168.21.119
+              ansible_user: cyber
+              ansible_python_interpreter: /usr/bin/python3
+              user_groups: wheel
+              kickstart_nic: ens192
+              gateway: 192.168.21.1
+              netmask: 255.255.255.0
+              dns: 192.168.20.69
+              ntp_server: 192.168.20.69
+              domain: gpssus.com
+              boot_os: rhel8
+              boot_drive: sda
+              root_percent: 50
+              home_percent: 5
+              tmp_percent: 5
+              var_percent: 20
+              log_percent: 5
+              audit_percent: 5
+              var_tmp_percent: 5
+              swap_percent: 5
+            adm02:
+              ansible_host: 192.168.21.119
+              ansible_user: cyber
+              ansible_python_interpreter: /usr/bin/python3
+              user_groups: wheel
+              kickstart_nic: ens192
+              gateway: 192.168.21.1
+              netmask: 255.255.255.0
+              dns: 192.168.20.69
+              ntp_server: 192.168.20.69
+              domain: gpssus.com
+              boot_os: rhel8
+              boot_drive: sda
+              root_percent: 50
+              home_percent: 5
+              tmp_percent: 5
+              var_percent: 20
+              log_percent: 5
+              audit_percent: 5
+              var_tmp_percent: 5
+              swap_percent: 5
+            wks01:
+              ansible_host: 192.168.21.119
+              ansible_user: cyber
+              ansible_python_interpreter: /usr/bin/python3
+              user_groups: wheel
+              kickstart_nic: ens192
+              gateway: 192.168.21.1
+              netmask: 255.255.255.0
+              dns: 192.168.20.69
+              ntp_server: 192.168.20.69
+              domain: gpssus.com
+              boot_os: rhel8
+              boot_drive: sda
+              root_percent: 50
+              home_percent: 5
+              tmp_percent: 5
+              var_percent: 20
+              log_percent: 5
+              audit_percent: 5
+              var_tmp_percent: 5
+              swap_percent: 5
+            wks02:
+              ansible_host: 192.168.21.119
+              ansible_user: cyber
+              ansible_python_interpreter: /usr/bin/python3
+              user_groups: wheel
+              kickstart_nic: ens192
+              gateway: 192.168.21.1
+              netmask: 255.255.255.0
+              dns: 192.168.20.69
+              ntp_server: 192.168.20.69
+              domain: gpssus.com
+              boot_os: rhel8
+              boot_drive: sda
+              root_percent: 50
+              home_percent: 5
+              tmp_percent: 5
+              var_percent: 20
+              log_percent: 5
+              audit_percent: 5
+              var_tmp_percent: 5
+              swap_percent: 5
