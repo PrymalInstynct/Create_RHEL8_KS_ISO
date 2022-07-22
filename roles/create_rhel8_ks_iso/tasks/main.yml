@@ -4,6 +4,14 @@
   tags:
     - always
 
+- name: "Prelim | Install Dependencies"
+  dnf:
+    name: lorax
+    state: present
+  delegate_to: localhost
+  tags:
+    - always
+
 - name: Create Kickstart Files
   import_tasks: generate_ks.yml
   delegate_to: localhost
@@ -14,6 +22,8 @@
 
 - name: Create ISO Files
   import_tasks: generate_iso.yml
+  delegate_to: localhost
+  run_once: yes
   tags:
     - never
     - make_iso

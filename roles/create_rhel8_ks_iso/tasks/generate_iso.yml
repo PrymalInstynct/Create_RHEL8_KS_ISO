@@ -6,36 +6,26 @@
     state: directory
 
 - name: "ISOs | Create provision01 Kickstart ISO"
-  shell: "mkksiso provision01.ks rhel-8.6-x86_64-dvd.iso ISOs/provison01-ks.iso"
+  shell: "mkksiso --ks kickstarts/provision01.ks rhel-8.6-x86_64-dvd.iso ISOs/provison01-ks.iso"
+  args:
+    chdir: "{{ role_path }}/files"
+
+- name: "ISOs | Create adm01 Kickstart ISO"
+  shell: "mkksiso --ks kickstarts/adm01.ks rhel-8.6-x86_64-dvd.iso ISOs/adm01-ks.iso"
   args:
     chdir: "{{ role_path }}"
-  delegate_to: localhost
-  run_once: yes
 
-# - name: "ISOs | Create adm01 Kickstart ISO"
-#   shell: "mkksiso adm01.ks rhel-8.6-x86_64-dvd.iso ISOs/adm01-ks.iso"
-#   args:
-#     chdir: "{{ role_path }}"
-#   delegate_to: localhost
-#   run_once: yes
+- name: "ISOs | Create adm02 Kickstart ISO"
+  shell: "mkksiso --ks kickstarts/adm02.ks rhel-8.6-x86_64-dvd.iso ISOs/adm02-ks.iso"
+  args:
+    chdir: "{{ role_path }}"
 
-# - name: "ISOs | Create adm02 Kickstart ISO"
-#   shell: "mkksiso adm02.ks rhel-8.6-x86_64-dvd.iso ISOs/adm02-ks.iso"
-#   args:
-#     chdir: "{{ role_path }}"
-#   delegate_to: localhost
-#   run_once: yes
+- name: "ISOs | Create wks01 Kickstart ISO"
+  shell: "mkksiso --ks kickstarts/wks01.ks rhel-8.6-x86_64-dvd.iso ISOs/wks01-ks.iso"
+  args:
+    chdir: "{{ role_path }}"
 
-# - name: "ISOs | Create wks01 Kickstart ISO"
-#   shell: "mkksiso wks01.ks rhel-8.6-x86_64-dvd.iso ISOs/wks01-ks.iso"
-#   args:
-#     chdir: "{{ role_path }}"
-#   delegate_to: localhost
-#   run_once: yes
-
-# - name: "ISOs | Create wks02 Kickstart ISO"
-#   shell: "mkksiso wks02.ks rhel-8.6-x86_64-dvd.iso ISOs/wks02-ks.iso"
-#   args:
-#     chdir: "{{ role_path }}"
-#   delegate_to: localhost
-#   run_once: yes
+- name: "ISOs | Create wks02 Kickstart ISO"
+  shell: "mkksiso --ks kickstarts/wks02.ks rhel-8.6-x86_64-dvd.iso ISOs/wks02-ks.iso"
+  args:
+    chdir: "{{ role_path }}"
